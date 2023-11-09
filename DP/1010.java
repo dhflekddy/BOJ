@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+//
 public class Main{
     public static int solution(int r, int n){
         int[][]dp=new int[n+1][r+1];
