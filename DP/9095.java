@@ -5,18 +5,30 @@ import java.util.StringTokenizer;
 
 public class Main{
 
-    public static void solution(int num){
-        int[]dp=new int[num+1];
-        dp[0]=1;
+    // public static void solution(int num){
+    //     int[]dp=new int[num+1];
+    //     dp[0]=1;
+    //     int[]arr={1,2,3};
+    //     for(int i=0;i<num;i++){
+    //         for(int j=0;j<arr.length;j++){
+    //             if(i+arr[j]<=num)
+    //                 dp[i+arr[j]]+=dp[i];
+    //         }
+    //     }
+    //     System.out.println(dp[num]);
+    // }
+    public static void solution(int target){
         int[]arr={1,2,3};
-        for(int i=0;i<num;i++){
-            for(int j=0;j<arr.length;j++){
-                if(i+arr[j]<=num)
-                    dp[i+arr[j]]+=dp[i];
+        int[]dp=new int[target+1];
+        dp[0]=1;
+        for(int i=0;i<target;i++){
+                for (var j : arr) {
+                    if(i+j<=target)dp[i+j]+=dp[i];
+                }
             }
+        System.out.println(dp[target]);
         }
-        System.out.println(dp[num]);
-    }
+
     public static void main(String[] arags)throws  IOException{
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         int n=Integer.parseInt(br.readLine());
