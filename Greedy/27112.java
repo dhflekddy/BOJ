@@ -1,61 +1,72 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
-public class Main {
-//
-    public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        StringTokenizer st;
-        PriorityQueue<Job> jobs = new PriorityQueue<>(((o1, o2) -> o1.d - o2.d));
+class Process{
+    private int deadline;
+    private int duration;
 
-        for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            int d = Integer.parseInt(st.nextToken());
-            int t = Integer.parseInt(st.nextToken());
+    public Process(int deadline, int duration){
+        this.deadline=deadline;
+        this.duration=duration;
+    }
+    public int getDeadline() {
+        return deadline;
+    }
 
-            jobs.add(new Job(d, t));
-        }
+    public int getDuration() {
+        return duration;
+    }
+}
+public class Main{
 
-        int result = 0;
-        int limit = 0;
-        int workDay = 0;
+    public static void deadlineScheduleWithDuration(PriorityQueue<Process>pq){
+        //answer은 답인동시에 시간외 근무 일수
+        int regularWork=0;
+        int answer=0;
+        while(!pq.isEmpty()){
+            Process p=pq.poll();
+            //어떻게 주말에는 정규근무가 가능하지 않은데 이렇게 코드를 짜서 통과가 될까?
+            // deadline을 앞당김으로써 주말에도 정규근무가 가능하도록 한 것이다!!!
 
-        while (!jobs.isEmpty()) {
-
-            Job job = jobs.poll();
-
-            limit = job.d;
-            limit -= (job.d / 7) * 2;  //평일
-
-            if (job.d % 7 == 6) limit--;
-
-            workDay += job.t;   //해야할 것추가
-
-            if (workDay > limit) {    //해야할게 기간보다 많을 겨우
-                result += workDay - limit;  //업무를 처리하고 남은 것들을 result에 추가함
-
-                workDay = limit;    //처리한 것들은 workDay에 담아둬야함
+            int renewedDeadline=p.getDeadline();
+            renewedDeadline-=(renewedDeadline/7)*2;
+            if(p.getDeadline()%7==6)
+                renewedDeadline--;
+            regularWork+=p.getDuration();
+            if(regularWork>renewedDeadline){
+                answer+=(regularWork-renewedDeadline);
+                regularWork=renewedDeadline;
             }
-
-            if (result > job.d) { //마감기한보다 처리할게 더 많다면
-                result = -1;
+            if(answer>p.getDeadline()){
+                answer=-1;
                 break;
             }
         }
-        System.out.println(result);
+        System.out.println(answer);
+
     }
 
-    static class Job {
-        int d; //마감기한
-        int t; //걸리는시간
+    public static void main(String[] args)throws IOException {
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
-        public Job(int d, int t) {
-            this.d = d;
-            this.t = t;
+        int n=Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        PriorityQueue<Process>pq=new PriorityQueue<>((a,b)->a.getDeadline()-b.getDeadline());
+        for(int i=0;i<n;i++){
+            st=new StringTokenizer(br.readLine());
+            int deadline=Integer.parseInt(st.nextToken());
+            int duration=Integer.parseInt(st.nextToken());
+            pq.add(new Process(deadline, duration));
         }
+        deadlineScheduleWithDuration(pq);
+
     }
+
 }
+
+//위와 같이 Comparable 인터페이스를 구현하게 하지않고 PriorityQueue에 직접적으로 아래와 같이 정렬기준을 심어줄수 있다.
+//        PriorityQueue<Process>pq=new PriorityQueue<>((a,b)->a.getDeadline()-b.getDeadline());
