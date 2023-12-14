@@ -14,7 +14,7 @@
 
 
 3초전에 설치된 폭탄을 폭발하라고 하지만 사실은 그 이전에 폭발이 한번일어났으므로 그 폭발로부터 남은 폭탄을
-터뜨리면 되는 것이고 그것은 2초전에 폭발로 부터 남아있는 폭탄들이다. (문제 자체에 대한 이해력)
+터뜨리면 되는 것이고 그것은 2초전의 폭발로 부터 남아있는 폭탄들이다. (문제 자체에 대한 이해력)
 
 와... 큐의 효율성을 제대로 말해주는 문제다. 터지는 과정에서 주변께 터지면 정작 자신도 터져야 하는데 주변것이 먼
 저 터지는 바람에 0으로 한끝 먼저 바뀌어버려서 자신은 정작터질수 없게 된다. 하지만 터뜨리기 이전에 큐에 담아놓으면 주변깨
@@ -85,8 +85,7 @@ public class Testing3 {
             }
 
         }
-        while (s > 0) {
-        }
+
         StringBuilder sb=new StringBuilder();
         for(int i=0;i<r;i++){
             for(int j=0;j<c;j++){
@@ -100,14 +99,7 @@ public class Testing3 {
         System.out.println(sb.toString());
 
     }
-//    public static void printMap(int[][]map){
-//        for(int i=0;i<r;i++){
-//            for(int j=0;j<c;j++){
-//                System.out.print(map[i][j]+" ");
-//            }
-//            System.out.println();
-//        }
-//    }
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
